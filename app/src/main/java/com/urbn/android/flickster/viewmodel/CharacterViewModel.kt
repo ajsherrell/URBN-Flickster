@@ -17,7 +17,7 @@ import javax.inject.Inject
 class CharacterViewModel @Inject constructor(
     private val repository: CharacterRepository
 ) : ViewModel() {
-    private var dataFetched = false
+    var dataFetched = false
 
     private val _errorMessage = MutableLiveData<String?>()
     val errorMessage: MutableLiveData<String?> = _errorMessage
@@ -32,7 +32,6 @@ class CharacterViewModel @Inject constructor(
     fun getSnackbar(view: View): Snackbar {
         val snackbar = Snackbar.make(view, "Network not detected", Snackbar.LENGTH_INDEFINITE)
             .setAction("Retry") {
-                dataFetched = false
                 retryFetchingData()
                 _errorMessage.postValue(null)
             }
@@ -78,6 +77,7 @@ class CharacterViewModel @Inject constructor(
                         if (isDatabaseEmpty()) {
                             response.body()?.characters?.let { characters ->
                                 saveCharacters(characters)
+                                CHARACTERSLIST.addAll(characters)
                             }
                         }
                         _currentSortingMethod.postValue(R.id.sort_alphabetically)
@@ -91,7 +91,8 @@ class CharacterViewModel @Inject constructor(
         }
     }
 
-    private fun retryFetchingData() {
+    fun retryFetchingData() {
+        dataFetched = false
         viewModelScope.launch {
             fetchCharacterData()
         }

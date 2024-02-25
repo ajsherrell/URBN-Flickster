@@ -23,7 +23,6 @@ import com.urbn.android.flickster.databinding.CharacterItemContentBinding
 import com.urbn.android.flickster.databinding.FragmentCharacterListBinding
 import com.urbn.android.flickster.viewmodel.CharacterViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CharacterListFragment : Fragment() {
@@ -77,7 +76,7 @@ class CharacterListFragment : Fragment() {
         }
 
         viewModel.getAllCharacters.observe(viewLifecycleOwner) { characters ->
-            if (characters.isNotEmpty()) {
+            if (characters.isNotEmpty() && viewModel.dataFetched) {
                 noItemsTextView.visibility = View.GONE
                 Toast.makeText(requireContext(), "Long press to sort", Toast.LENGTH_SHORT).show()
             } else {
