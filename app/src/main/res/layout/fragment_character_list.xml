@@ -9,12 +9,30 @@
     android:layout_marginStart="@dimen/container_horizontal_margin"
     android:layout_marginEnd="@dimen/container_horizontal_margin">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/app_bar_height"
+        android:paddingEnd="@dimen/container_horizontal_margin"
+        android:paddingStart="@dimen/container_horizontal_margin"
+        android:textAlignment="center"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:text="@string/no_list_found"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        android:id="@+id/empty_list"
+        tools:visibility="visible" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/item_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginLeft="@dimen/container_horizontal_margin"
+        android:layout_marginRight="@dimen/container_horizontal_margin"
         app:layoutManager="LinearLayoutManager"
         tools:context="com.urbn.android.flickster.HostActivity"
         tools:listitem="@layout/character_item_content" />

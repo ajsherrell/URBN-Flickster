@@ -23,7 +23,7 @@ object PlaceholderContent {
     }
 
     private fun createPlaceholderItem(position: Int): Character {
-        return Character("Character Name $position", makeDetails(position))
+        return Character(0,"Character Name $position", makeDetails(position))
     }
 
     private fun makeDetails(position: Int): String {

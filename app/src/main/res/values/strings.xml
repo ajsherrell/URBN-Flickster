@@ -22,4 +22,9 @@
     <string name="character_list_fragment_title_srch">Searching Characters For</string>
     <string name="character_list_fragment_title_faves">Favorite Characters</string>
     <string name="character_detail">CharacterDetail</string>
+    <string name="character_photo">Character Picture</string>
+    <string name="sort_alphabetically">Sort Alphabetically</string>
+    <string name="reverse">Reverse Alphabetical</string>
+    <string name="favorite_indicator">favorite indicator</string>
+    <string name="no_list_found">Oops! No TV characters found.\nPlease check your network and try again later.</string>
 </resources>

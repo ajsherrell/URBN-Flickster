@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/sort_alphabetically"
+        android:title="@string/sort_alphabetically"
+        android:checkable="true"/>
+    <item
+        android:id="@+id/sort_reverse"
+        android:title="@string/reverse"
+        android:checkable="true"/>
+    <item
+        android:id="@+id/sort_favorite"
+        android:title="@string/favorites"
+        android:checkable="true"/>
+</menu>
