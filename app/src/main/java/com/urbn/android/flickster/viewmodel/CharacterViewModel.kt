@@ -17,11 +17,10 @@ import javax.inject.Inject
 class CharacterViewModel @Inject constructor(
     private val repository: CharacterRepository
 ) : ViewModel() {
+    private var dataFetched = false
 
     private val _errorMessage = MutableLiveData<String?>()
     val errorMessage: MutableLiveData<String?> = _errorMessage
-
-    var isDefaultSort: Boolean = true // todo: DO i need this?
 
     var CHARACTERSLIST: MutableList<Character?> = ArrayList()
 
@@ -33,6 +32,7 @@ class CharacterViewModel @Inject constructor(
     fun getSnackbar(view: View): Snackbar {
         val snackbar = Snackbar.make(view, "Network not detected", Snackbar.LENGTH_INDEFINITE)
             .setAction("Retry") {
+                dataFetched = false
                 retryFetchingData()
                 _errorMessage.postValue(null)
             }
@@ -45,13 +45,12 @@ class CharacterViewModel @Inject constructor(
 
     fun updateSortedCharacters(
         sortingMethod: Int,
-        characters: MutableList<Character?>
     ): List<Character?> {
         return when (sortingMethod) {
-            R.id.sort_alphabetically -> characters.sortedBy { it?.name }
-            R.id.sort_reverse -> characters.sortedByDescending { it?.name }
-            R.id.sort_favorite -> characters.filter { it?.isFavorite ?: false }
-            else -> characters
+            R.id.sort_alphabetically -> CHARACTERSLIST.sortedBy { it?.name }
+            R.id.sort_reverse -> CHARACTERSLIST.sortedByDescending { it?.name }
+            R.id.sort_favorite -> CHARACTERSLIST.filter { it?.isFavorite ?: false }
+            else -> CHARACTERSLIST
         }
     }
 
@@ -70,21 +69,24 @@ class CharacterViewModel @Inject constructor(
     }
 
     suspend fun fetchCharacterData() {
-        viewModelScope.launch {
-            try {
-                val response = repository.getCharacters()
-                if (response.isSuccessful) {
-                    if (isDatabaseEmpty()) {
-                        response.body()?.characters?.let { characters ->
-                            saveCharacters(characters)
+        if (!dataFetched) {
+            dataFetched = true
+            viewModelScope.launch {
+                try {
+                    val response = repository.getCharacters()
+                    if (response.isSuccessful) {
+                        if (isDatabaseEmpty()) {
+                            response.body()?.characters?.let { characters ->
+                                saveCharacters(characters)
+                            }
                         }
+                        _currentSortingMethod.postValue(R.id.sort_alphabetically)
+                    } else {
+                        _errorMessage.postValue("Error fetching data")
                     }
-                    _currentSortingMethod.postValue(R.id.sort_alphabetically)
-                } else {
-                    _errorMessage.postValue("Error fetching data")
+                } catch (e: Exception) {
+                    _errorMessage.postValue(e.message)
                 }
-            } catch (e: Exception) {
-                _errorMessage.postValue(e.message)
             }
         }
     }

@@ -63,7 +63,7 @@ class CharacterListFragment : Fragment() {
 
         registerForContextMenu(binding.itemList)
 
-        viewLifecycleOwner.lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.fetchCharacterData()
         }
 
@@ -76,28 +76,19 @@ class CharacterListFragment : Fragment() {
             }
         }
 
-        viewModel.currentSortingMethod.observe(viewLifecycleOwner) { method ->
-            viewModel.isDefaultSort = false
-            if (method != null) {
-                val sortedList = viewModel.updateSortedCharacters(method, viewModel.CHARACTERSLIST)
-                adapter.submitList(sortedList)
-                adapter.notifyDataSetChanged()
+        viewModel.getAllCharacters.observe(viewLifecycleOwner) { characters ->
+            if (characters.isNotEmpty()) {
+                noItemsTextView.visibility = View.GONE
+                Toast.makeText(requireContext(), "Long press to sort", Toast.LENGTH_SHORT).show()
+            } else {
+                noItemsTextView.visibility = View.VISIBLE
             }
+            viewModel.CHARACTERSLIST = characters.toMutableList()
         }
 
-        if (viewModel.isDefaultSort) {
-            viewModel.getAllCharacters.observe(viewLifecycleOwner) { characters ->
-                if (characters.isEmpty()) {
-                    noItemsTextView.visibility = View.VISIBLE
-                } else {
-                    noItemsTextView.visibility = View.GONE
-                    Toast.makeText(requireContext(), "Long press to sort", Toast.LENGTH_SHORT).show()
-                    viewModel.CHARACTERSLIST.clear()
-                    viewModel.CHARACTERSLIST.addAll(characters)
-                    adapter.submitList(viewModel.CHARACTERSLIST)
-                    adapter.notifyDataSetChanged()
-                }
-            }
+        viewModel.currentSortingMethod.observe(viewLifecycleOwner) { method ->
+            val sortedList = viewModel.updateSortedCharacters(method)
+            adapter.submitList(sortedList)
         }
     }
 
