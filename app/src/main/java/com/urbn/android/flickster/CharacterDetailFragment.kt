@@ -41,11 +41,8 @@ class CharacterDetailFragment : Fragment() {
 
         val navController = findNavController()
         val appBarConfiguration = AppBarConfiguration(navController.graph)
-        (activity as AppCompatActivity).supportActionBar?.title = item.name
-        (activity as AppCompatActivity).supportActionBar?.displayOptions = view.baseline
 
-        binding.toolbar.title = item.name
-        binding.toolbar.textAlignment = View.TEXT_ALIGNMENT_VIEW_END
+        binding.toolbarTitle.text = item.name
         binding.characterDetail.text = item.details
         updateFavoriteButtonUI(item.isFavorite)
 
