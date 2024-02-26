@@ -5,10 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
 import coil.load
 import com.urbn.android.flickster.data.Character
 import com.urbn.android.flickster.databinding.FragmentCharacterDetailBinding
@@ -38,10 +35,6 @@ class CharacterDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val navController = findNavController()
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
-
         binding.toolbarTitle.text = item.name
         binding.characterDetail.text = item.details
         updateFavoriteButtonUI(item.isFavorite)

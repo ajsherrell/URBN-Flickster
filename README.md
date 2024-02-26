@@ -67,3 +67,14 @@ Use the Star icons included in the project, with an example of how you might des
 5. (Senior Candidates Only) Add an offline mode to the app by using a Room database
 to store the fetched Character data as well as the current state of uses liked characters. This
 state should persist across app re-starts
+
+
+ # As the candidate, I have completed the tasks and submitted the code for review..
+ Used:
+ - Retrofit for network calls
+ - Coil for image loading
+ - Room for database
+ - LiveData for observing data changes
+ - ViewModel for handling data
+ - Coroutines for async operations
+ - Hilt for dependency injection

@@ -5,6 +5,11 @@ import java.util.HashMap
 
 object PlaceholderContent {
 
+    /*
+    * Kept the placeholder content for the characters in a separate file to make it easier to
+    * test.
+    * */
+
     val CHARACTERS: MutableList<Character> = ArrayList()
 
     private val CHARACTER_MAP: MutableMap<String, Character> = HashMap()
