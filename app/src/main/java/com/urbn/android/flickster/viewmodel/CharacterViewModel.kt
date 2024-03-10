@@ -1,6 +1,7 @@
 package com.urbn.android.flickster.viewmodel
 
 import android.view.View
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,12 +21,12 @@ class CharacterViewModel @Inject constructor(
     var dataFetched = false
 
     private val _errorMessage = MutableLiveData<String?>()
-    val errorMessage: MutableLiveData<String?> = _errorMessage
+    val errorMessage: LiveData<String?> get() = _errorMessage
 
     var CHARACTERSLIST: MutableList<Character?> = ArrayList()
 
     private val _currentSortingMethod = MutableLiveData<Int>()
-    var currentSortingMethod: MutableLiveData<Int> = _currentSortingMethod
+    val currentSortingMethod: LiveData<Int> get() = _currentSortingMethod
 
     val getAllCharacters = repository.getAllCharactersStream()
 
